@@ -10,6 +10,14 @@
       "StackName": "amplify-amplifychatapp-dev-ae834",
       "StackId": "arn:aws:cloudformation:ap-northeast-2:851725566033:stack/amplify-amplifychatapp-dev-ae834/26570100-f210-11f0-955b-02ba24510571",
       "AmplifyAppId": "d1gwfstrfwredj"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1gwfstrfwredj",
+          "type": "cicd"
+        }
+      }
     }
   }
 }
