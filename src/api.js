@@ -1,4 +1,4 @@
-const BASE = import.meta.env.VITE_API_BASE; // Viteの場合。CRAなら下に別記
+const BASE = process.env.REACT_APP_API_BASE;
 
 async function handleJson(res) {
   const text = await res.text().catch(() => "");
