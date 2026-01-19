@@ -1,9 +1,8 @@
 const BASE = import.meta.env.VITE_API_BASE; // Viteの場合。CRAなら下に別記
 
 async function handleJson(res) {
+  const text = await res.text().catch(() => "");
   if (!res.ok) {
-    const text = await res.text().catch(() => "");
-    
     // ★ 生レスポンスを必ず記録（本番前に消せばOK）
     console.debug("[API raw]", res.url, res.status, text);
 
