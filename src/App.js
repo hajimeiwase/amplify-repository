@@ -23,6 +23,7 @@ function App() {
     setError('');
     try {
       const res = await searchSlides(input); // ← API Gateway 経由で Lambda のダミーAPIに接続
+      // console.debug("[searchSlides result]", res, Array.isArray(res?.items) ? `items: ${res.items.length}` : "items invalid");
       setItems(res.items || []);
 
       // AI 側の応答メッセージ（件数表示）
@@ -74,6 +75,31 @@ function App() {
           placeholder="質問を入力..."
         />
         <button onClick={handleSend}>送信</button>
+      </div>
+
+{/* ▼ 検索結果のタイル表示 */}
+      <div className="grid">
+        {items.map((it) => (
+          <div key={it.id} className="card">
+            <div className="title">{it.proposal_title}</div>
+            <div className="meta">スライド: {it.slide_no}</div>
+            <div className="snippet">{it.text_snippet}</div>
+
+            {/* プレビュー画像（ダミーURLが 404 の時は非表示に） */}
+            {it.preview_url && (
+              <img
+                src={it.preview_url}
+                alt="preview"
+                className="preview"
+                onError={(e) => (e.currentTarget.style.display = 'none')}
+              />
+            )}
+
+            <button className="download" onClick={() => handleDownload(it.s3_key)}>
+              ダウンロード
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
