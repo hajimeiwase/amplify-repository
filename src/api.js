@@ -3,9 +3,19 @@ const BASE = import.meta.env.VITE_API_BASE; // Viteの場合。CRAなら下に�
 async function handleJson(res) {
   if (!res.ok) {
     const text = await res.text().catch(() => "");
+    
+    // ★ 生レスポンスを必ず記録（本番前に消せばOK）
+    console.debug("[API raw]", res.url, res.status, text);
+
     throw new Error(`HTTP ${res.status} ${res.statusText} - ${text}`);
   }
-  return res.json();
+  // return res.json();
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    throw new Error(`Invalid JSON response: ${text?.slice(0, 400)}`);
+  }
+
 }
 
 export async function health() {
