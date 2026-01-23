@@ -10,6 +10,16 @@ function App() {
   const [error, setError] = useState('');        // ★ 追
 
 
+  // ▼ 追加：Hosted UI へリダイレクトするだけ（SPAクライアントのlogin URLを.envに設定）
+  const handleLogin = () => {
+    const url = process.env.REACT_APP_COGNITO_LOGIN_URL;
+    if (!url) {
+      alert('REACT_APP_COGNITO_LOGIN_URL が未設定です');
+      return;
+    }
+    window.location.href = url;
+  };
+
   const handleSend = async () => {
     if (!input.trim()) return;
 
@@ -58,7 +68,12 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="App">      
+      {/* ▼ ログインボタン（Hosted UI へ） */}
+      <div className="auth-bar">
+        <button onClick={handleLogin}>ログイン</button>
+      </div>
+
       <h2>提案資料検索チャット</h2>
       <div className="chat-box">
         {messages.map((msg, idx) => (
